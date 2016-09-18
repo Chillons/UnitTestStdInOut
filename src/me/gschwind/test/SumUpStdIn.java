@@ -1,4 +1,3 @@
-
 /*
  * MIT License
  *
@@ -23,15 +22,24 @@
  * SOFTWARE.
  */
 
+package me.gschwind.test;
+
 import java.util.Scanner;
 
 /**
  * Reads two numbers from StdIn and prints the result to StdOut. This is an example class to demonstrate unit testing
  * with StdIn and StdOut.
+ *
  */
 public class SumUpStdIn {
 
-
+    /**
+     * The main method and only method under test. It reads two integer values from System.in and prints the sum to
+     * System.out with a newline character at the end. The method does not care for overflow, it is as simple as
+     * possible to run the test cases.
+     *
+     * @param args ignored.
+     */
     public static void main(String[] args) {
 
         final Scanner s = new Scanner(System.in);

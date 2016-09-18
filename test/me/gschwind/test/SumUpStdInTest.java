@@ -22,67 +22,49 @@
  * SOFTWARE.
  */
 
-import org.junit.After;
-import org.junit.Before;
+package me.gschwind.test;
+
 import org.junit.Test;
 
-import java.io.*;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Maurice Gschwind on 09.09.16.
+ * A sample test to demonstrate the usage of {@link SystemInOutTest}.
+ *
+ * @author Maurice Gschwind
  */
-public class SumUpStdInTest {
+public class SumUpStdInTest extends SystemInOutTest {
 
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-
-    @Before
-    public void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
+    @Override
+    protected String classUnderTest() {
+        return "me.gschwind.test.SumUpStdIn";
     }
 
-    @After
-    public void cleanUpStreams() {
-        System.setOut(null);
-        System.setErr(null);
-    }
-
+    /**
+     * Runs a test against test data from a string
+     */
     @Test
     public void testFromString() {
 
-        String data = "1 5";
+        final String data = "1 5";
 
-        InputStream stdin = System.in;
-
-        try {
-            System.setIn(new ByteArrayInputStream(data.getBytes()));
-
-            SumUpStdIn.main(null);
-        } finally {
-            System.setIn(stdin);
-        }
+        runString(data);
 
         assertEquals("Should be 6 but was\n" + outContent.toString(), "6\n", outContent.toString());
     }
 
+
+    /**
+     * Runs a test against test data from a file.
+     */
     @Test
-    public void testFromFile() throws FileNotFoundException {
+    public void testFromFile() {
 
+        final String filename = "SumUpTest0";
 
-        InputStream stdin = System.in;
-
-        try {
-            File f = new File("SumUpTest0.txt");
-            System.setIn(new FileInputStream(f));
-
-            SumUpStdIn.main(null);
-        } finally {
-            System.setIn(stdin);
-        }
+        runFile(filename);
 
         assertEquals("Should be 42 but was " + outContent.toString(), "42\n", outContent.toString());
     }
+
 }
